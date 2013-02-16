@@ -7,8 +7,12 @@ A program with flying cubes that morph of the screen and bounces into walls.
 
 The number of cubes can be put as a argument at run
 
+DONE
+Make a led light blink every time a cube hits a wall.
+
 TODO:
 
-1. Make a led light blink every time a cube hits a wall.
-2. Make a nicer collision-handler
-3. Make cubes collide with each other
+Make a nicer collision-handler
+Make Cubes aware of each other
+Investigate wierd color flickering
+Make cubes collide with each other

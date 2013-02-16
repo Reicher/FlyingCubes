@@ -16,7 +16,7 @@ Morph<T>::Morph(T min, T max, T v)
 {
   m_current = getRandom(min, max);
   m_period = getRandom(min, max);
-  m_flip = (getRandom(0, 1) > 0);
+  m_direction = getRandom(0, 1) ? -1 : 1;
 };
 template <typename T>
 void Morph<T>::setLED(BlinkLED* LED)
@@ -29,25 +29,23 @@ T Morph<T>::update(float dt)
 {
   if(m_current >= m_max)
     {
-      m_flip = true;
+      m_direction = -1.0;
       if(m_LED)
 	m_LED->setOnFor(1000);
     }
   else if(m_current <= m_min)
     {
-      m_flip = false;
+      m_direction = 1.0;
       if(m_LED)
 	m_LED->setOnFor(1000);
     }
   else if(m_cycles >= m_period)
     {
-      m_flip= !m_flip;
       m_period = getRandom((int)m_min, (int)m_max);
       m_cycles = 0;
     }
     
-  float direction = m_flip ? -1.0 : 1.0;
-  m_current += direction * (T)getRandom((T)0, (T)m_v);
+  m_current += m_direction * (T)getRandom((T)0, (T)m_v);
   m_cycles += 1;
 
   

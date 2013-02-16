@@ -15,7 +15,7 @@ class Morph
   void setLED(BlinkLED* LED);
   T update(float dt);
 
-  int m_cycles, m_period, m_flip;
+  int m_cycles, m_period, m_direction;
   T m_min, m_max, m_v, m_current;
 
   BlinkLED* m_LED;
