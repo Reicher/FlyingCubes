@@ -3,7 +3,7 @@ CC=g++
 CFLAGS=`sdl-config --cflags` -c 
 LFLAGS=`sdl-config --libs` -o
 
-all: main.o FlyingCube.o Morph.o Helpers.o GPIOClass.o
+all: main.o FlyingCube.o Morph.o Helpers.o GPIOClass.o BlinkLED.o
 	$(CC) $(LFLAGS) FlyingCubes main.o FlyingCube.o Morph.o Helpers.o GPIOClass.o BlinkLED.o
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
