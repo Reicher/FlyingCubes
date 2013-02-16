@@ -5,14 +5,16 @@ FLYING CUBES README
 
 A program with flying cubes that morph of the screen and bounces into walls.
 
-The number of cubes can be put as a argument at run
+Runtime arguments
 
-DONE
-Make a led light blink every time a cube hits a wall.
+-c	Number of cubes, should always be followed by a number
+
+-l 	Led light on collision, should always be followed by a gpio number
+
+
 
 TODO:
 
-make led a runtime option
 Physical button increase the number of cubes and another decrease
 Nicer collision-handler
 Make Cubes aware of each other
