@@ -12,7 +12,9 @@ Make a led light blink every time a cube hits a wall.
 
 TODO:
 
-Make a nicer collision-handler
+make led a runtime option
+Physical button increase the number of cubes and another decrease
+Nicer collision-handler
 Make Cubes aware of each other
 Investigate wierd color flickering
 Make cubes collide with each other

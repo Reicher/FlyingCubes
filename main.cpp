@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include <list>
 #include <cstdlib>
 
@@ -8,15 +9,18 @@
 
 using namespace std;
 
-int main( int argc, char* args[] )
+int main( int argc, char* argv[] )
 {
-  BlinkLED LEDLight("17");
+  BlinkLED* LEDLight = NULL;
+  int nCubes = 1;
 
   //Get user input
-  int nCubes = 1;
-  if(argc > 1)
+  for(int a = 1; a < argc; a++)
     {
-      nCubes = atoi(args[1]);
+      if(strcmp(argv[a], "-c") == 0 && argc > a)
+	  nCubes = atoi(argv[a+1]);
+      if(strcmp(argv[a], "-l") == 0 && argc > a)
+	  LEDLight = new BlinkLED(argv[a+1]);
     }
 
   srand(static_cast<unsigned>(time(0)));
@@ -45,7 +49,7 @@ int main( int argc, char* args[] )
   list<FlyingCube> cubes;
   for(int i = 0; i < nCubes; i++)
     {
-      cubes.push_back(FlyingCube(screen, &LEDLight));
+      cubes.push_back(FlyingCube(screen, LEDLight));
     }
 
   bool isRunning = true;
@@ -81,7 +85,8 @@ int main( int argc, char* args[] )
       }
 
     //LEDS
-    LEDLight.update(ftime);
+    if(LEDLight)
+      LEDLight->update(ftime);
 
     //Update screem
     SDL_Flip( screen );
@@ -90,7 +95,8 @@ int main( int argc, char* args[] )
   }
 
   //Turn off and unexport gpio
-  LEDLight.finish();
+  if(LEDLight)
+    LEDLight->finish();
 
   //Quit SDL
   SDL_Quit();
