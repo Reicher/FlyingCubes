@@ -4,7 +4,7 @@ CFLAGS=`sdl-config --cflags` -c
 LFLAGS=`sdl-config --libs` -o
 
 all: main.o FlyingCube.o Morph.o Helpers.o GPIOClass.o
-	$(CC) $(LFLAGS) SdlTest main.o FlyingCube.o Morph.o Helpers.o GPIOClass.o
+	$(CC) $(LFLAGS) FlyingCubes main.o FlyingCube.o Morph.o Helpers.o GPIOClass.o
 main.o: main.cpp
 	$(CC) $(CFLAGS) main.cpp
 FlyingCube.o: FlyingCube.cpp FlyingCube.h
