@@ -1,4 +1,5 @@
 #include "Morph.h"
+#include "BlinkLED.h"
 
 template <typename T>
 Morph<T>::Morph()
@@ -18,18 +19,26 @@ Morph<T>::Morph(T min, T max, T v)
   m_flip = (getRandom(0, 1) > 0);
 };
 template <typename T>
-void Morph<T>::setLED(GPIOClass* LED)
+void Morph<T>::setLED(BlinkLED* LED)
 {
   m_LED = LED;
 }
 
 template <typename T>
-T Morph<T>::update()
+T Morph<T>::update(float dt)
 {
   if(m_current >= m_max)
+    {
       m_flip = true;
+      if(m_LED)
+	m_LED->setOnFor(1000);
+    }
   else if(m_current <= m_min)
-    m_flip = false;
+    {
+      m_flip = false;
+      if(m_LED)
+	m_LED->setOnFor(1000);
+    }
   else if(m_cycles >= m_period)
     {
       m_flip= !m_flip;
@@ -41,9 +50,11 @@ T Morph<T>::update()
   m_current += direction * (T)getRandom((T)0, (T)m_v);
   m_cycles += 1;
 
+  
   return m_current;
     
 };
+
 
 template class Morph<int>;
 template class Morph<float>;

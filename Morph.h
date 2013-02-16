@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Helpers.h"
-#include "GPIOClass.h" 
+
+class BlinkLED; 
 
 template <typename T>
 class Morph
@@ -11,11 +12,11 @@ class Morph
 
   Morph(T min, T max, T v = 1);
 
-  void setLED(GPIOClass* LED);
-  T update();
+  void setLED(BlinkLED* LED);
+  T update(float dt);
 
   int m_cycles, m_period, m_flip;
   T m_min, m_max, m_v, m_current;
 
-  GPIOClass* m_LED;
+  BlinkLED* m_LED;
 };

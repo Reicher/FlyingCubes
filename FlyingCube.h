@@ -6,14 +6,14 @@
 
 #include "Morph.h"
 
-class GPIOClass;
+class BlinkLED;
 
 class FlyingCube
 {
  public:
-  FlyingCube(SDL_Surface* screen, GPIOClass* LEDLight);
+  FlyingCube(SDL_Surface* screen, BlinkLED* LEDLight);
 
-  void update();
+  void update(float ms);
 
   void draw();
  

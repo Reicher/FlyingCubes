@@ -4,16 +4,13 @@
 
 #include "SDL/SDL.h"
 #include "FlyingCube.h"
-#include "GPIOClass.h"
+#include "BlinkLED.h"
 
 using namespace std;
 
 int main( int argc, char* args[] )
 {
-  //Setup GPIO
-  GPIOClass* gpio17 = new GPIOClass("17");
-  gpio17->export_gpio();
-  gpio17->setdir_gpio("out");
+  BlinkLED LEDLight("17");
 
   //Get user input
   int nCubes = 1;
@@ -22,9 +19,10 @@ int main( int argc, char* args[] )
       nCubes = atoi(args[1]);
     }
 
-  SDL_Surface* screen = NULL;
-
   srand(static_cast<unsigned>(time(0)));
+  Uint32 m_oldTime, m_currentTime;
+  float ftime;
+  m_currentTime = SDL_GetTicks();
 
   //Start SDL
   SDL_Init( SDL_INIT_VIDEO );
@@ -35,6 +33,7 @@ int main( int argc, char* args[] )
   Uint8 bpp = videoInfo->vfmt->BitsPerPixel;
 
   //Set up screen
+  SDL_Surface* screen = NULL;
   screen = SDL_SetVideoMode(systemX, systemY, bpp, SDL_SWSURFACE);
 
   if(!screen)
@@ -46,13 +45,17 @@ int main( int argc, char* args[] )
   list<FlyingCube> cubes;
   for(int i = 0; i < nCubes; i++)
     {
-      cubes.push_back(FlyingCube(screen, gpio17));
+      cubes.push_back(FlyingCube(screen, &LEDLight));
     }
 
   bool isRunning = true;
   SDL_Event event;
 
   while( isRunning){
+
+    m_oldTime = m_currentTime;
+    m_currentTime = SDL_GetTicks();
+    ftime = (m_currentTime - m_oldTime) / 1000.0f;
 
     SDL_FillRect(screen, NULL, 0x0000000);
 
@@ -73,9 +76,12 @@ int main( int argc, char* args[] )
     //Drawin
     for(list<FlyingCube>::iterator it = cubes.begin(); it != cubes.end(); ++it)
       {
-	it->update();
+	it->update(ftime);
 	it->draw();
       }
+
+    //LEDS
+    LEDLight.update(ftime);
 
     //Update screem
     SDL_Flip( screen );
@@ -83,8 +89,8 @@ int main( int argc, char* args[] )
     SDL_Delay( 10 );
   }
 
-  //Unexport gpio
-  gpio17->unexport_gpio();
+  //Turn off and unexport gpio
+  LEDLight.finish();
 
   //Quit SDL
   SDL_Quit();
