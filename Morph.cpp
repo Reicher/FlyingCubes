@@ -31,13 +31,13 @@ T Morph<T>::update(float dt)
     {
       m_direction = -1.0;
       if(m_LED)
-	m_LED->setOnFor(1000);
+	m_LED->setOnFor(100);
     }
   else if(m_current <= m_min)
     {
       m_direction = 1.0;
       if(m_LED)
-	m_LED->setOnFor(1000);
+	m_LED->setOnFor(100);
     }
   else if(m_cycles >= m_period)
     {
@@ -48,6 +48,10 @@ T Morph<T>::update(float dt)
   m_current += m_direction * (T)getRandom((T)0, (T)m_v);
   m_cycles += 1;
 
+  if(m_current > m_max)
+    m_current = m_max;
+  if(m_current < m_min)
+    m_current = m_min;
   
   return m_current;
     

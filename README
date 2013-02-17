@@ -1,4 +1,3 @@
-
 *******************
 FLYING CUBES README
 *******************
@@ -18,5 +17,4 @@ TODO:
 Physical button increase the number of cubes and another decrease
 Nicer collision-handler
 Make Cubes aware of each other
-Investigate wierd color flickering
 Make cubes collide with each other
