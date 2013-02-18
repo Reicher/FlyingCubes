@@ -6,15 +6,14 @@ A program with flying cubes that morph of the screen and bounces into walls.
 
 Runtime arguments
 
--c	Number of cubes, should always be followed by a number
+-c [cubes]	Number of cubes
 
--l 	Led light on collision, should always be followed by a gpio number
+-l [gpionum] 	Led light on collision
 
 
 
 TODO:
 
 Physical button increase the number of cubes and another decrease
-Nicer collision-handler
 Make Cubes aware of each other
 Make cubes collide with each other

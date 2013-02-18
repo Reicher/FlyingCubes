@@ -25,17 +25,11 @@ void Morph<T>::setLED(BlinkLED* LED)
 }
 
 template <typename T>
-T Morph<T>::update(float dt)
+T Morph<T>::update(const float dt)
 {
-  if(m_current >= m_max)
+  if( hitRoof() || hitFloor() )
     {
-      m_direction = -1.0;
-      if(m_LED)
-	m_LED->setOnFor(100);
-    }
-  else if(m_current <= m_min)
-    {
-      m_direction = 1.0;
+      m_direction = hitRoof() ? -1.0 : 1.0;
       if(m_LED)
 	m_LED->setOnFor(100);
     }
@@ -48,15 +42,33 @@ T Morph<T>::update(float dt)
   m_current += m_direction * (T)getRandom((T)0, (T)m_v);
   m_cycles += 1;
 
-  if(m_current > m_max)
-    m_current = m_max;
-  if(m_current < m_min)
-    m_current = m_min;
-  
+  keepWithinBorders();
+
   return m_current;
     
 };
 
+template <typename T>
+bool Morph<T>::hitRoof()
+{
+  return m_current >= m_max; 
+}
 
+template <typename T>
+bool Morph<T>::hitFloor()
+{
+  return m_current <= m_min;
+}
+
+template <typename T>
+void Morph<T>::keepWithinBorders()
+{
+  if( m_current > m_max )
+    m_current = m_max;
+ 
+  if( m_current < m_min )
+      m_current = m_min;
+
+}
 template class Morph<int>;
 template class Morph<float>;
