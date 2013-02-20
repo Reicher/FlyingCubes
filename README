@@ -10,10 +10,11 @@ Runtime arguments
 
 -l [gpionum] 	Led light on collision
 
+-ib [gpionum]	Button for increase number of cubes
 
+-db [gpionum] 	Button for decreasing number fo cubes
 
 TODO:
-
-Physical button increase the number of cubes and another decrease
+make some kinde of timer for the buttons if they happen to flicker a bit when pushed
 Make Cubes aware of each other
 Make cubes collide with each other

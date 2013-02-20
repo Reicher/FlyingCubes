@@ -6,21 +6,28 @@
 #include "SDL/SDL.h"
 #include "FlyingCube.h"
 #include "BlinkLED.h"
+#include "Button.h"
 
 using namespace std;
 
 int main( int argc, char* argv[] )
 {
   BlinkLED* LEDLight = NULL;
+  Button* iButton = NULL;
+  Button* dButton = NULL;
   int nCubes = 1;
 
   //Get user input
   for(int a = 1; a < argc; a++)
     {
       if(strcmp(argv[a], "-c") == 0 && argc > a)
-	  nCubes = atoi(argv[a+1]);
-      if(strcmp(argv[a], "-l") == 0 && argc > a)
-	  LEDLight = new BlinkLED(argv[a+1]);
+	nCubes = atoi(argv[a+1]);
+      else if(strcmp(argv[a], "-l") == 0 && argc > a)
+	LEDLight = new BlinkLED(argv[a+1]);
+      else if(strcmp(argv[a], "-ib") == 0 && argc > a)
+	iButton = new Button(argv[a+1]);
+      else if(strcmp(argv[a], "-db") == 0 && argc > a)
+	dButton = new Button(argv[a+1]);
     }
 
   srand(static_cast<unsigned>(time(0)));
@@ -87,6 +94,18 @@ int main( int argc, char* argv[] )
     //LEDS
     if(LEDLight)
       LEDLight->update(ftime);
+
+    //Buttons
+    if(iButton)
+      {
+	if(iButton->IsPressedOnce())
+	  cubes.push_back(FlyingCube(screen, LEDLight));
+      }
+    if(dButton)
+      {
+	if(dButton->IsPressedOnce())
+	  cubes.pop_back();
+      }
 
     //Update screem
     SDL_Flip( screen );
